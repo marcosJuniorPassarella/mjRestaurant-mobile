@@ -4,6 +4,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { StackParamsList } from '../../routes/app.routes';
+import { api } from '../../services/api'
 
 export default function Dashboard() {
     const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
@@ -11,12 +12,14 @@ export default function Dashboard() {
     const { signOut } = useContext(AuthContext)
 
     async function openOrder() {
-        if(tableNumber === ''){
+        if (tableNumber === '') {
             return;
         }
-
-        // CRIAR A ORDER E NAVEGAR PARA A TELA DE PEDIDO
-        navigation.navigate('Order', { table: tableNumber, order_id: 'aru8cauwry8w2q5rtf4tr4fd' })
+        const response = await api.post('/order', {
+            table: Number(tableNumber)
+        })
+        navigation.navigate('Order', { table: tableNumber, order_id: response.data.id })
+        setTableNumber('')
     }
 
     return (
