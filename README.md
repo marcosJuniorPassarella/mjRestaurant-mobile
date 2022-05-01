@@ -1,1 +1,1 @@
-Projeto em desenvolvimento utilizando Typescript - React Native
+Aplicativo desenvolvido utilizando Typescript - React Native
